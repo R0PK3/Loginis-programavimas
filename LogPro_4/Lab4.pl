@@ -1,0 +1,72 @@
+% Robertas Buracevskis, 2110543, PS3, 4uzd, 1.1 var
+
+galimosSekos(1,2).
+galimosSekos(1,3).
+galimosSekos(2,1).
+galimosSekos(2,3).
+galimosSekos(3,1).
+galimosSekos(3,2).
+
+
+
+vandens_pylimai([Tikslas,_,_], Tikslas, _, _, []):- !.
+vandens_pylimai(Busena, Tikslas, Indai, Sekos, [[is, IndasIs, i, IndasI]|Pylimai]) :-
+    galimosSekos(IndasIs, IndasI),
+    pilk(Busena, NaujaBusena, Indai, IndasIs, IndasI),
+    not(member(NaujaBusena, Sekos)),
+    vandens_pylimai(NaujaBusena, Tikslas, Indai, [NaujaBusena|Sekos], Pylimai),
+    spausdink([IndasIs,IndasI|_]).
+
+spausdink([IndasIs, IndasI | _]):-
+    write('is '), write(IndasIs), write(' i '), write(IndasI), nl.
+
+
+
+pilk([Indas1,Indas2,Indas3], [0,Suma,Indas3], [_,Indas2_Dydis,_], 1, 2) :-
+    Indas1>0, Indas1+Indas2<Indas2_Dydis,
+    Suma is Indas2+Indas1.
+pilk([Indas1,Indas2,Indas3], [Suma,Indas2_Dydis,Indas3], [_,Indas2_Dydis,_], 1, 2) :-
+    Indas1>0, Indas1+Indas2>=Indas2_Dydis,
+    Suma is Indas1-Indas2_Dydis+Indas2.
+
+pilk([Indas1,Indas2,Indas3], [0,Indas2,Suma], [_,_,Indas3_Dydis], 1, 3) :-
+    Indas1>0, Indas1+Indas3<Indas3_Dydis,
+    Suma is Indas3+Indas1.
+pilk([Indas1,Indas2,Indas3], [Suma,Indas2,Indas3_Dydis], [_,_,Indas3_Dydis], 1, 3) :-
+    Indas1>0, Indas1+Indas3>=Indas3_Dydis,
+    Suma is Indas1-Indas3_Dydis+Indas3.
+
+pilk([Indas1,Indas2,Indas3], [Suma,0,Indas3], [Indas1_Dydis,_,_], 2, 1) :-
+    Indas2>0, Indas2+Indas1<Indas1_Dydis,
+    Suma is Indas1+Indas2.
+pilk([Indas1,Indas2,Indas3], [Indas1_Dydis,Suma,Indas3], [Indas1_Dydis,_,_], 2, 1) :-
+    Indas2>0, Indas2+Indas1>=Indas1_Dydis,
+    Suma is Indas2-Indas1_Dydis+Indas1.
+
+pilk([Indas1,Indas2,Indas3], [Indas1,0,Suma], [_,_,Indas3_Dydis], 2, 3) :-
+    Indas2>0, Indas2+Indas3<Indas3_Dydis,
+    Suma is Indas3+Indas2.
+pilk([Indas1,Indas2,Indas3], [Indas1,Suma,Indas3_Dydis], [_,_,Indas3_Dydis], 2, 3) :-
+    Indas2>0, Indas2+Indas3>=Indas3_Dydis,
+    Suma is Indas2-Indas3_Dydis+Indas3.
+
+pilk([Indas1,Indas2,Indas3], [Suma,Indas2,0], [Indas1_Dydis,_,_], 3, 1) :-
+    Indas3>0, Indas3+Indas1<Indas1_Dydis,
+    Suma is Indas1+Indas3.
+pilk([Indas1,Indas2,Indas3], [Indas1_Dydis,Indas2,Suma], [Indas1_Dydis,_,_], 3, 1) :-
+    Indas3>0, Indas3+Indas1>=Indas1_Dydis,
+    Suma is Indas3-Indas1_Dydis+Indas1.
+
+pilk([Indas1,Indas2,Indas3], [Indas1,Suma,0], [_,Indas2_Dydis,_], 3, 2) :-
+    Indas3>0, Indas3+Indas2<Indas2_Dydis,
+    Suma is Indas2+Indas3.
+pilk([Indas1,Indas2,Indas3], [Indas1,Indas2_Dydis,Suma], [_,Indas2_Dydis,_], 3, 2) :-
+    Indas3>0, Indas3+Indas2>=Indas2_Dydis,
+    Suma is Indas3-Indas2_Dydis+Indas2.
+
+
+
+% vandens_pylimai([8,0,0],2,[8,4,2],[],P).
+% vandens_pylimai([8,0,0],4,[8,5,3],[],P).
+% vandens_pylimai([5,0,0],5,[5,3,2],[],P).
+
